@@ -66,6 +66,52 @@
     });
   }
 
+  function initCountUp() {
+    var counters = document.querySelectorAll('[data-count-to]');
+    if (!counters.length) return;
+
+    function setFinalValue(el) {
+      var target = Number(el.getAttribute('data-count-to'));
+      var suffix = el.getAttribute('data-suffix') || '';
+      el.textContent = target.toLocaleString() + suffix;
+    }
+
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      counters.forEach(setFinalValue);
+      return;
+    }
+
+    function animateCount(el) {
+      var target = Number(el.getAttribute('data-count-to'));
+      var suffix = el.getAttribute('data-suffix') || '';
+      var duration = 1400;
+      var start = null;
+
+      function tick(timestamp) {
+        if (start === null) start = timestamp;
+        var progress = Math.min((timestamp - start) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var value = Math.round(eased * target);
+        el.textContent = value.toLocaleString() + suffix;
+        if (progress < 1) {
+          requestAnimationFrame(tick);
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          animateCount(entry.target);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    counters.forEach(function (el) { observer.observe(el); });
+  }
+
   function initContactForm() {
     var form = document.querySelector('.contact-form');
     if (!form) return;
@@ -91,6 +137,7 @@
     initNav();
     initStaggerGroups();
     initReveal();
+    initCountUp();
     initContactForm();
   });
 })();
