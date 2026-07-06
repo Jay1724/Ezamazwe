@@ -132,12 +132,27 @@
         <span class="eyebrow">Trusted collaboration</span>
         <h2>In partnership with organisations across Africa and Europe</h2>
       </div>
-      <div class="partners-grid" data-reveal-group>
-        <div class="partner-slot reveal">Partner 01</div>
-        <div class="partner-slot reveal">Partner 02</div>
-        <div class="partner-slot reveal">Partner 03</div>
-        <div class="partner-slot reveal">Partner 04</div>
-        <div class="partner-slot reveal">Partner 05</div>
+    </div>
+
+    <!--
+      Partner logos: swap each "Partner 0X" placeholder for an
+      <img class="partner-slot__logo" src="..." alt="..."> once the
+      client supplies real logos. The track is duplicated once
+      (aria-hidden) so the scroll loops seamlessly — keep both halves
+      in sync when adding real logos.
+    -->
+    <div class="partners-carousel reveal" aria-label="Partner organisations">
+      <div class="partners-track">
+        <div class="partner-slot">Partner 01</div>
+        <div class="partner-slot">Partner 02</div>
+        <div class="partner-slot">Partner 03</div>
+        <div class="partner-slot">Partner 04</div>
+        <div class="partner-slot">Partner 05</div>
+        <div class="partner-slot" aria-hidden="true">Partner 01</div>
+        <div class="partner-slot" aria-hidden="true">Partner 02</div>
+        <div class="partner-slot" aria-hidden="true">Partner 03</div>
+        <div class="partner-slot" aria-hidden="true">Partner 04</div>
+        <div class="partner-slot" aria-hidden="true">Partner 05</div>
       </div>
     </div>
   </section>
