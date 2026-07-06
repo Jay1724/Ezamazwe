@@ -119,4 +119,14 @@
 .mission-recap p {
   font-size: 18px;
   color: var(--ink-soft);
+  margin-bottom: 20px;
+}
+
+.mission-recap p:last-child {
+  margin-bottom: 0;
+}
+
+.mission-recap strong {
+  color: var(--ink);
+  font-weight: 600;
 }
