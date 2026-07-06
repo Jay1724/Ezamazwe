@@ -1,4 +1,4 @@
-/* Ezamazwe — shared interactions: nav scroll state, mobile menu, scroll-reveal, contact form */
+/* Ezamazwe Education — shared interactions: nav scroll state, mobile menu, scroll-reveal, contact form */
 
 (function () {
   'use strict';
@@ -121,7 +121,7 @@
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var data = new FormData(form);
-      console.log('Ezamazwe contact form (static demo submission):', Object.fromEntries(data));
+      console.log('Ezamazwe Education contact form (static demo submission):', Object.fromEntries(data));
 
       var success = document.querySelector('.form-success');
       if (success) {
