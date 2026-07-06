@@ -16,7 +16,14 @@
 
 .pillar-hero h1 {
   font-size: clamp(34px, 4.6vw, 54px);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+}
+
+.pillar-hero__tagline {
+  font-size: 19px;
+  color: var(--ink-soft);
+  max-width: 60ch;
+  margin-bottom: 40px;
 }
 
 .pillar-hero__vision-label {
