@@ -1,0 +1,132 @@
+/* ==========================================================================
+   Shared styles for the 3 pillar detail pages
+   ========================================================================== */
+
+.pillar-hero {
+  padding: 176px 0 96px;
+}
+
+.pillar-hero__inner {
+  max-width: 780px;
+}
+
+.pillar-hero .eyebrow {
+  color: var(--pillar-accent, var(--blue));
+}
+
+.pillar-hero h1 {
+  font-size: clamp(34px, 4.6vw, 54px);
+  margin-bottom: 24px;
+}
+
+.pillar-hero__vision-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.pillar-hero__vision {
+  font-size: 21px;
+  color: var(--ink);
+  line-height: 1.55;
+  font-weight: 500;
+}
+
+.pillar-hero--education { background: var(--tint-education); --pillar-accent: var(--blue); }
+.pillar-hero--incubation { background: var(--tint-incubation); --pillar-accent: var(--indigo); }
+.pillar-hero--enterprise { background: var(--tint-enterprise); --pillar-accent: var(--teal); }
+
+/* Focus area grid */
+.focus-heading {
+  margin-bottom: 48px;
+}
+
+.focus-heading h2 {
+  font-size: clamp(26px, 3vw, 34px);
+}
+
+.focus-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.focus-card {
+  background: var(--white);
+  padding: 36px;
+  display: flex;
+  gap: 20px;
+}
+
+.focus-card__num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--pillar-accent, var(--blue));
+  flex-shrink: 0;
+  width: 32px;
+}
+
+.focus-card h3 {
+  font-size: 19px;
+  margin-bottom: 10px;
+}
+
+.focus-card p {
+  color: var(--ink-soft);
+  font-size: 15px;
+}
+
+.section--tint-education { --pillar-accent: var(--blue); }
+.section--tint-incubation { --pillar-accent: var(--indigo); }
+.section--tint-enterprise { --pillar-accent: var(--teal); }
+
+/* Secondary "why / how" panel */
+.pillar-extra {
+  background: var(--white);
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius-card);
+  padding: 48px;
+  margin-top: 64px;
+}
+
+.pillar-extra h3 {
+  font-size: 22px;
+  margin-bottom: 28px;
+}
+
+.pillar-extra-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.pillar-extra-grid h4 {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: var(--pillar-accent, var(--blue));
+}
+
+.pillar-extra-grid p {
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+/* Pillar cross-links */
+.pillar-nav-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 920px) {
+  .focus-grid { grid-template-columns: 1fr; }
+  .pillar-extra-grid { grid-template-columns: 1fr; gap: 24px; }
+  .pillar-extra { padding: 32px 24px; }
+}

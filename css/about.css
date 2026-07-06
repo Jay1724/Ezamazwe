@@ -1,0 +1,122 @@
+/* ==========================================================================
+   About page styles
+   ========================================================================== */
+
+.about-hero {
+  padding: 176px 0 96px;
+  text-align: center;
+}
+
+.about-hero__inner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.about-hero h1 {
+  font-size: clamp(34px, 4.6vw, 54px);
+  margin-bottom: 24px;
+}
+
+.about-hero p {
+  font-size: 19px;
+  color: var(--ink-soft);
+}
+
+/* Founder */
+.founder {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 56px;
+  align-items: start;
+}
+
+.founder__portrait {
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-card);
+  background: var(--tint-education);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--hairline);
+}
+
+.founder__portrait span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--ink-soft);
+  text-align: center;
+  padding: 0 24px;
+}
+
+.founder__name {
+  font-size: 26px;
+  margin-bottom: 6px;
+}
+
+.founder__title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--blue);
+  margin-bottom: 28px;
+  display: block;
+}
+
+.founder__bio p {
+  color: var(--ink-soft);
+  font-size: 16.5px;
+  margin-bottom: 20px;
+}
+
+.founder__bio p:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 920px) {
+  .founder { grid-template-columns: 1fr; gap: 32px; }
+  .founder__portrait { max-width: 320px; margin: 0 auto; }
+}
+
+/* Values grid */
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 56px;
+}
+
+.value-card {
+  background: var(--white);
+  padding: 32px;
+}
+
+.value-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: var(--blue);
+}
+
+.value-card p {
+  font-size: 15px;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 920px) {
+  .values-grid { grid-template-columns: 1fr; }
+}
+
+/* Mission recap */
+.mission-recap {
+  max-width: 760px;
+}
+
+.mission-recap h2 {
+  font-size: clamp(26px, 3vw, 36px);
+  margin-bottom: 24px;
+}
+
+.mission-recap p {
+  font-size: 18px;
+  color: var(--ink-soft);
+}

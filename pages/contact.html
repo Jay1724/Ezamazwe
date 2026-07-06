@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact — Ezamazwe</title>
+<meta name="description" content="Get in touch with Ezamazwe Education Centre for Innovation — partnerships, funding, mentorship, and general enquiries.">
+<link rel="icon" type="image/svg+xml" href="../assets/logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/base.css">
+<link rel="stylesheet" href="../css/contact.css">
+</head>
+<body>
+
+<nav class="site-nav" id="siteNav">
+  <div class="wrap site-nav__inner">
+    <a href="../index.html" class="brand">
+      <img src="../assets/logo.svg" alt="" class="brand__mark">
+      <span>Ezamazwe</span>
+    </a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links">
+      <a href="about.html">About</a>
+      <a href="../index.html#pillars">Programs</a>
+      <a href="../index.html#partners">Partners</a>
+      <a href="contact.html" class="is-active">Contact</a>
+      <a href="contact.html" class="btn btn--primary btn--sm">Partner with us</a>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+  <section class="contact-hero">
+    <div class="wrap contact-hero__inner reveal">
+      <span class="eyebrow">Get in touch</span>
+      <h1>Let's build the next chapter of this ecosystem together.</h1>
+      <p>Whether you're a funder, a university, a mentor, a prospective partner, or a fellow innovator — we'd love to hear from you.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 32px;">
+    <div class="wrap contact-layout">
+      <div class="reveal">
+        <!--
+          Static contact form only — no backend is wired up.
+          On submit, js/main.js logs the values to the console and
+          reveals a local "message sent" confirmation state.
+        -->
+        <div class="form-success" role="status">
+          <span>&#10003;</span>
+          <span>Thanks — your message has been noted. We'll be in touch soon.</span>
+        </div>
+
+        <form class="contact-form" action="#" method="post">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="name">Full name</label>
+              <input type="text" id="name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="organisation">Organisation</label>
+            <input type="text" id="organisation" name="organisation" placeholder="Company, university, or NGO (optional)">
+          </div>
+          <div class="form-field">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell us a bit about what you have in mind..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary">Send message</button>
+          <p class="form-note">This form is a static demo — submissions are not sent anywhere yet. Ready to be wired up to a backend or form service on request.</p>
+        </form>
+      </div>
+
+      <div class="reveal">
+        <div class="contact-info-card">
+          <h3>Address</h3>
+          <p>Lenyenye, Limpopo,<br>South Africa</p>
+        </div>
+        <div class="contact-info-card">
+          <h3>Email</h3>
+          <a href="mailto:hello@ezamazwe.org">hello@ezamazwe.org</a>
+        </div>
+        <div class="contact-info-card">
+          <h3>Follow us</h3>
+          <div class="contact-social">
+            <a href="#" aria-label="Facebook">f</a>
+            <a href="#" aria-label="X / Twitter">x</a>
+            <a href="#" aria-label="LinkedIn">in</a>
+            <a href="#" aria-label="Instagram">ig</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="../assets/logo.svg" alt="" class="footer-brand__mark">
+          <span>Ezamazwe</span>
+        </div>
+        <p style="max-width: 34ch;">Education Centre for Innovation — a grassroots innovation ecosystem built from Lenyenye, Limpopo outward.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="X / Twitter">x</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="#" aria-label="Instagram">ig</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Programs</h4>
+        <a href="education-accelerator.html">Education Accelerator</a>
+        <a href="incubation-hub.html">Incubation Hub</a>
+        <a href="enterprise-accelerator.html">Enterprise Accelerator</a>
+      </div>
+      <div class="footer-col">
+        <h4>Organisation</h4>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <p>Lenyenye, Limpopo, South Africa</p>
+        <a href="mailto:hello@ezamazwe.org">hello@ezamazwe.org</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Ezamazwe Education Centre for Innovation. All rights reserved.</span>
+      <span>Lenyenye, Limpopo, South Africa</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>
