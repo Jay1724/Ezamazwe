@@ -275,9 +275,13 @@
 .partner-slot {
   flex: 0 0 auto;
   width: 200px;
-  border: 1px dashed var(--hairline);
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--hairline);
   border-radius: 16px;
-  padding: 28px 12px;
+  padding: 16px 20px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
   color: var(--ink-soft);
@@ -285,11 +289,11 @@
 }
 
 .partner-slot__logo {
-  max-height: 36px;
-  width: auto;
-  margin: 0 auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
   filter: grayscale(1);
-  opacity: 0.7;
+  opacity: 0.75;
   transition: filter var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
 }
 
