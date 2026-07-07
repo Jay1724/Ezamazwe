@@ -274,14 +274,14 @@
 
 .partner-slot {
   flex: 0 0 auto;
-  width: 200px;
-  height: 96px;
+  width: 260px;
+  height: 128px;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--hairline);
   border-radius: 16px;
-  padding: 16px 20px;
+  padding: 20px 28px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
   color: var(--ink-soft);
@@ -292,14 +292,6 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  filter: grayscale(1);
-  opacity: 0.75;
-  transition: filter var(--dur-fast) var(--ease), opacity var(--dur-fast) var(--ease);
-}
-
-.partner-slot:hover .partner-slot__logo {
-  filter: grayscale(0);
-  opacity: 1;
 }
 
 @keyframes partners-scroll {
@@ -321,7 +313,7 @@
 }
 
 @media (max-width: 640px) {
-  .partner-slot { width: 160px; }
+  .partner-slot { width: 200px; height: 104px; }
 }
 
 /* Contact band (dark, on homepage) */
