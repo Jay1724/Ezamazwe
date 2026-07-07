@@ -265,7 +265,7 @@
   display: flex;
   width: max-content;
   gap: 20px;
-  animation: partners-scroll 32s linear infinite;
+  animation: partners-scroll 50s linear infinite;
 }
 
 .partners-carousel:hover .partners-track {
