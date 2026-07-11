@@ -7,15 +7,29 @@
 --   update public.users set role = 'admin' where email = 'you@example.com';
 -- ============================================================================
 
-insert into public.courses (id, title, description, category, age_group, level, thumbnail_url, instructor_name, instructor_bio, published, price_cents, currency)
+insert into public.courses (id, title, description, category, age_group, level, thumbnail_url, instructor_name, instructor_bio, published, price_cents, currency, outcomes, skills)
 values
-  ('00000000-0000-0000-0000-000000000101', 'Intro to Robotics for Kids', 'A hands-on first look at robotics — building simple circuits and programming a robot to move.', 'STEM', 'kids', 'beginner', null, 'Thandiwe Nkosi', 'Robotics Club coordinator at Ezamazwe Education, working with primary school learners across Limpopo.', true, 0, 'ZAR'),
-  ('00000000-0000-0000-0000-000000000102', 'Storytelling & Creative Writing', 'Fun writing exercises and storytelling games for young learners to build confidence with words.', 'Literacy', 'kids', 'beginner', null, 'Palesa Mokoena', 'Afterschool programs facilitator focused on early literacy.', true, 0, 'ZAR'),
-  ('00000000-0000-0000-0000-000000000201', 'Digital Literacy Foundations', 'Get comfortable with computers, the internet, and everyday digital tools used in school and work.', 'Technology', 'teens', 'beginner', null, 'Karabo Sithole', 'Innovation in Education program lead.', true, 0, 'ZAR'),
-  ('00000000-0000-0000-0000-000000000202', 'Intro to Python Programming', 'Learn the fundamentals of Python through small, practical projects.', 'STEM', 'teens', 'intermediate', null, 'Karabo Sithole', 'Innovation in Education program lead.', true, 4900, 'ZAR'),
-  ('00000000-0000-0000-0000-000000000301', 'Small Business Financial Literacy', 'Budgeting, pricing, and cash flow basics for township-based entrepreneurs.', 'Entrepreneurship', 'adult', 'beginner', null, 'Nomvula Dlamini', 'Enterprise & Employability Accelerator mentor and former economic analyst.', true, 0, 'ZAR'),
-  ('00000000-0000-0000-0000-000000000302', 'Grant Writing for Grassroots Innovators', 'How to write a compelling grant application, from problem statement to budget.', 'Entrepreneurship', 'adult', 'intermediate', null, 'Nomvula Dlamini', 'Enterprise & Employability Accelerator mentor and former economic analyst.', true, 9900, 'ZAR'),
-  ('00000000-0000-0000-0000-000000000303', 'Marketing Your Startup on a Budget', 'Practical, low-cost marketing strategies for early-stage township enterprises.', 'Entrepreneurship', 'adult', 'beginner', null, 'Sipho Mahlangu', 'Grassroots Innovators Incubation Hub mentor.', true, 0, 'ZAR')
+  ('00000000-0000-0000-0000-000000000101', 'Intro to Robotics for Kids', 'A hands-on first look at robotics — building simple circuits and programming a robot to move.', 'STEM', 'kids', 'beginner', null, 'Thandiwe Nkosi', 'Robotics Club coordinator at Ezamazwe Education, working with primary school learners across Limpopo.', true, 0, 'ZAR',
+    array['Build a simple circuit from scratch', 'Understand how sensors and motors work together', 'Program a robot to move and respond to its surroundings'],
+    array['Robotics', 'Circuits', 'Problem solving']),
+  ('00000000-0000-0000-0000-000000000102', 'Storytelling & Creative Writing', 'Fun writing exercises and storytelling games for young learners to build confidence with words.', 'Literacy', 'kids', 'beginner', null, 'Palesa Mokoena', 'Afterschool programs facilitator focused on early literacy.', true, 0, 'ZAR',
+    array['Build a story from beginning to end', 'Create a character with a clear personality', 'Read your work aloud with confidence'],
+    array['Creative writing', 'Literacy', 'Confidence building']),
+  ('00000000-0000-0000-0000-000000000201', 'Digital Literacy Foundations', 'Get comfortable with computers, the internet, and everyday digital tools used in school and work.', 'Technology', 'teens', 'beginner', null, 'Karabo Sithole', 'Innovation in Education program lead.', true, 0, 'ZAR',
+    array['Navigate a computer and common software confidently', 'Search and evaluate information online', 'Recognise and avoid common online safety risks'],
+    array['Digital literacy', 'Online safety']),
+  ('00000000-0000-0000-0000-000000000202', 'Intro to Python Programming', 'Learn the fundamentals of Python through small, practical projects.', 'STEM', 'teens', 'intermediate', null, 'Karabo Sithole', 'Innovation in Education program lead.', true, 4900, 'ZAR',
+    array['Write and run your first Python programs', 'Work confidently with variables, loops, and functions', 'Build a small quiz game from scratch'],
+    array['Python', 'Programming fundamentals', 'Problem solving']),
+  ('00000000-0000-0000-0000-000000000301', 'Small Business Financial Literacy', 'Budgeting, pricing, and cash flow basics for township-based entrepreneurs.', 'Entrepreneurship', 'adult', 'beginner', null, 'Nomvula Dlamini', 'Enterprise & Employability Accelerator mentor and former economic analyst.', true, 0, 'ZAR',
+    array['Track cash flow for a small business', 'Price a product or service with confidence', 'Build a simple monthly budget'],
+    array['Budgeting', 'Pricing', 'Cash flow']),
+  ('00000000-0000-0000-0000-000000000302', 'Grant Writing for Grassroots Innovators', 'How to write a compelling grant application, from problem statement to budget.', 'Entrepreneurship', 'adult', 'intermediate', null, 'Nomvula Dlamini', 'Enterprise & Employability Accelerator mentor and former economic analyst.', true, 9900, 'ZAR',
+    array['Structure a compelling grant application', 'Write a clear, evidence-based problem statement', 'Build a realistic project budget'],
+    array['Grant writing', 'Budgeting', 'Fundraising']),
+  ('00000000-0000-0000-0000-000000000303', 'Marketing Your Startup on a Budget', 'Practical, low-cost marketing strategies for early-stage township enterprises.', 'Entrepreneurship', 'adult', 'beginner', null, 'Sipho Mahlangu', 'Grassroots Innovators Incubation Hub mentor.', true, 0, 'ZAR',
+    array['Identify your target customer', 'Run a social media presence with zero budget', 'Plan a simple, low-cost marketing campaign'],
+    array['Marketing', 'Social media', 'Entrepreneurship'])
 on conflict (id) do nothing;
 
 insert into public.lessons (course_id, title, order_index, video_provider, video_url, duration_seconds, resources, is_preview)

@@ -15,6 +15,8 @@ const emptyCourse = {
   instructor_bio: '',
   price_rand: '0',
   thumbnail_url: '' as string | null,
+  outcomesText: '',
+  skillsText: '',
 };
 
 function parseResources(text: string): LessonResource[] {
@@ -26,6 +28,13 @@ function parseResources(text: string): LessonResource[] {
       const [label, url] = line.split('|').map((s) => s.trim());
       return { label: label || url, url: url || label };
     });
+}
+
+function parseLines(text: string): string[] {
+  return text
+    .split('\n')
+    .map((line) => line.trim())
+    .filter(Boolean);
 }
 
 function resourcesToText(resources: LessonResource[]): string {
@@ -82,6 +91,8 @@ export function AdminCourseEditPage() {
       instructor_bio: c.instructor_bio,
       price_rand: (c.price_cents / 100).toString(),
       thumbnail_url: c.thumbnail_url,
+      outcomesText: c.outcomes.join('\n'),
+      skillsText: c.skills.join('\n'),
     });
 
     const { data: lessonData } = await supabase
@@ -114,6 +125,8 @@ export function AdminCourseEditPage() {
       instructor_bio: form.instructor_bio,
       price_cents: Math.round(parseFloat(form.price_rand || '0') * 100),
       thumbnail_url: form.thumbnail_url,
+      outcomes: parseLines(form.outcomesText),
+      skills: parseLines(form.skillsText),
     };
 
     if (courseDbId) {
@@ -205,6 +218,22 @@ export function AdminCourseEditPage() {
         <div className="field">
           <label>Description</label>
           <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} />
+        </div>
+        <div className="field">
+          <label>What you'll learn (one per line)</label>
+          <textarea
+            value={form.outcomesText}
+            onChange={(e) => setForm({ ...form, outcomesText: e.target.value })}
+            placeholder={'Build a simple circuit from scratch\nProgram a robot to move'}
+          />
+        </div>
+        <div className="field">
+          <label>Skill tags (one per line)</label>
+          <textarea
+            value={form.skillsText}
+            onChange={(e) => setForm({ ...form, skillsText: e.target.value })}
+            placeholder={'Robotics\nProblem solving'}
+          />
         </div>
         <div className="grid-2">
           <div className="field">

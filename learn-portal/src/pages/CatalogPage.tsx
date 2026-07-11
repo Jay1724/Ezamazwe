@@ -4,6 +4,9 @@ import type { Course, CourseAgeGroup, CourseLevel } from '../types/database';
 import { CourseCard } from '../components/CourseCard';
 import { Reveal } from '../components/Reveal';
 import { PageSpinner } from '../components/PageSpinner';
+import { DemoModeBanner } from '../components/DemoModeBanner';
+import { isDemoMode } from '../lib/demoMode';
+import { mockCourses } from '../lib/mockData';
 
 const AGE_GROUPS: { value: CourseAgeGroup | 'any'; label: string }[] = [
   { value: 'any', label: 'All ages' },
@@ -30,6 +33,11 @@ export function CatalogPage() {
   const [search, setSearch] = useState('');
 
   useEffect(() => {
+    if (isDemoMode) {
+      setCourses(mockCourses);
+      setLoading(false);
+      return;
+    }
     let mounted = true;
     supabase
       .from('courses')
@@ -67,6 +75,7 @@ export function CatalogPage() {
 
   return (
     <div>
+      {isDemoMode && <DemoModeBanner />}
       <section className="catalog-hero wrap">
         <h1>Learn something new with Ezamazwe</h1>
         <p>

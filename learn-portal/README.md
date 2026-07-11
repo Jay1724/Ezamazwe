@@ -46,14 +46,24 @@ bypasses RLS) can be swapped in without loosening security elsewhere.
 ```bash
 cd learn-portal
 npm install
-cp .env.example .env.local   # fill in your Supabase project URL + anon key
-npm run dev                  # http://localhost:5173
+npm run dev                  # http://localhost:5173 — boots straight into demo mode
 ```
 
-The UI boots and renders even without a configured Supabase project (you'll
-see a console warning and data fetches will fail) — this was verified by
-directly loading every route. For actual data (courses, auth, enrollments)
-you need a real Supabase project with the schema below applied.
+### Demo mode
+
+With no `.env.local`, the app automatically runs in **demo mode**: the
+catalog, course detail, and lesson player are populated with bundled shell
+courses (`src/lib/mockData.ts`) instead of hitting Supabase, so you can
+preview the full "browse → enroll → watch a lesson" experience — including
+the simulated paid checkout — with zero backend setup. An orange banner
+marks every page as demo content, and enrollment/progress are kept in
+`localStorage` only, never sent anywhere. This is the fastest way to see
+what a course looks like end to end, including the Coursera-style course
+detail layout ("What you'll learn" checklist, skill tags, syllabus,
+instructor card).
+
+Once you configure a real Supabase project (below), the app automatically
+switches to live data — there's no separate flag to flip.
 
 ### Supabase setup
 
@@ -83,23 +93,29 @@ apply the migration and seed file automatically.
 
 ```
 src/
-  lib/            Supabase client, payment/video provider abstractions, formatting helpers
+  lib/            Supabase client, payment/video provider abstractions, formatting helpers,
+                  demoMode.ts (flag) + mockData.ts (shell courses/lessons + localStorage progress)
   contexts/       AuthContext (session + role), LearnerProfileContext (parent/child switcher)
-  components/     NavBar, Footer, CourseCard, ProgressBar, route guards, Reveal (scroll animation)
+  components/     NavBar, Footer, CourseCard, ProgressBar, route guards, Reveal (scroll animation),
+                  DemoModeBanner
   pages/          Catalog, CourseDetail, LessonPlayer, Dashboard, Login, Signup
   pages/admin/    Course list (CRUD) + course/lesson editor
   styles/         global.css (ported design tokens/components), portal.css (LMS-specific components)
   types/          Hand-written types matching the SQL schema
 supabase/
-  migrations/0001_init.sql   Full schema + RLS policies + storage bucket
-  seed.sql                   Sample courses/lessons for local dev
+  migrations/0001_init.sql                    Core schema + RLS policies + storage bucket
+  migrations/0002_course_marketing_fields.sql  outcomes/skills columns for the course detail page
+  seed.sql                                     Sample courses/lessons for local dev (mirrors mockData.ts)
 ```
 
 ## What's implemented (MVP scope)
 
+- Demo mode (no setup required) with 7 shell courses across all three
+  tracks — see "Demo mode" above
 - Catalog with age group / level / category filters + search
-- Course detail with syllabus, instructor info, free or paid enrollment
-  (paid courses go through a simulated checkout — see flagged decisions)
+- Course detail, Coursera-style: "What you'll learn" checklist, skill
+  tags, syllabus, instructor card, and free or paid enrollment (paid
+  courses go through a simulated checkout — see flagged decisions)
 - Lesson player: video (stub), auto-saved progress (every 5s + on
   pause/end), sidebar with completion checkmarks, next-lesson nav,
   resources tab

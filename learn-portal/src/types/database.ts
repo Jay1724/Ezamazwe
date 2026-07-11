@@ -40,6 +40,8 @@ export interface Course {
   published: boolean;
   price_cents: number;
   currency: string;
+  outcomes: string[];
+  skills: string[];
   created_at: string;
 }
 
