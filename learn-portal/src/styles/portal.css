@@ -169,7 +169,8 @@
 
 /* Catalog */
 .catalog-hero {
-  padding: 56px 0 40px;
+  padding-top: 56px;
+  padding-bottom: 40px;
 }
 
 .catalog-hero h1 {
@@ -538,7 +539,8 @@
 
 /* Dashboard */
 .dashboard-hero {
-  padding: 48px 0 32px;
+  padding-top: 48px;
+  padding-bottom: 32px;
 }
 
 .dashboard-hero h1 {
