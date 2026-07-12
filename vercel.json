@@ -1,0 +1,8 @@
+{
+  "buildCommand": "bash scripts/build.sh",
+  "outputDirectory": ".vercel_output",
+  "rewrites": [
+    { "source": "/learn", "destination": "/learn/index.html" },
+    { "source": "/learn/:path*", "destination": "/learn/index.html" }
+  ]
+}
