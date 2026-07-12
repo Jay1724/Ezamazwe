@@ -193,32 +193,56 @@
 /* Pillars teaser */
 .pillars-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 28px;
   margin-top: 56px;
 }
 
 .pillar-card {
-  padding: 40px 32px;
   display: flex;
   flex-direction: column;
-  min-height: 380px;
+  overflow: hidden;
 }
 
-.pillar-card--education { background: var(--tint-education); }
-.pillar-card--incubation { background: var(--tint-incubation); }
-.pillar-card--enterprise { background: var(--tint-enterprise); }
+.pillar-card__photo {
+  aspect-ratio: 16 / 10;
+  width: 100%;
+  overflow: hidden;
+}
+
+.pillar-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-med) var(--ease);
+}
+
+.pillar-card:hover .pillar-card__photo img {
+  transform: scale(1.04);
+}
+
+.pillar-card__body {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.pillar-card--education .pillar-card__body { background: var(--tint-education); }
+.pillar-card--incubation .pillar-card__body { background: var(--tint-incubation); }
+.pillar-card--enterprise .pillar-card__body { background: var(--tint-enterprise); }
+.pillar-card--performing-arts .pillar-card__body { background: var(--tint-performing-arts); }
 
 .pillar-card__num {
   font-family: 'JetBrains Mono', monospace;
   font-size: 13px;
   color: var(--ink-soft);
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .pillar-card h3 {
-  font-size: 24px;
-  margin-bottom: 16px;
+  font-size: 22px;
+  margin-bottom: 14px;
 }
 
 .pillar-card p {

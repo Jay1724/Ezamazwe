@@ -26,7 +26,13 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0 28px;
+  overflow: hidden;
+}
+
+.pillar-hero__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .pillar-hero__image span {
@@ -34,6 +40,7 @@
   font-size: 13px;
   color: var(--ink-soft);
   line-height: 1.6;
+  padding: 0 28px;
 }
 
 @media (max-width: 920px) {
@@ -83,6 +90,7 @@
 .pillar-hero--education { background: var(--tint-education); --pillar-accent: var(--blue); }
 .pillar-hero--incubation { background: var(--tint-incubation); --pillar-accent: var(--indigo); }
 .pillar-hero--enterprise { background: var(--tint-enterprise); --pillar-accent: var(--teal); }
+.pillar-hero--performing-arts { background: var(--tint-performing-arts); --pillar-accent: var(--amber); }
 
 /* Focus area grid */
 .focus-heading {
@@ -128,6 +136,7 @@
 .section--tint-education { --pillar-accent: var(--blue); }
 .section--tint-incubation { --pillar-accent: var(--indigo); }
 .section--tint-enterprise { --pillar-accent: var(--teal); }
+.section--tint-performing-arts { --pillar-accent: var(--amber); }
 
 /* Secondary "why / how" panel */
 .pillar-extra {

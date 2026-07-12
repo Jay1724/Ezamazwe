@@ -10,6 +10,8 @@
   --blue-dim: #2E5EDB;
   --indigo: #4B4FE0;
   --teal: #0091AE;
+  --amber: #D97706;
+  --amber-dim: #B45309;
   --ink: #1D1D1F;
   --ink-soft: #6E6E73;
   --hairline: rgba(0, 0, 0, 0.08);
@@ -18,6 +20,7 @@
   --tint-education: linear-gradient(135deg, #EAF1FF, #F5F5F7);
   --tint-incubation: linear-gradient(135deg, #ECEBFC, #F5F5F7);
   --tint-enterprise: linear-gradient(135deg, #E4F6F8, #F5F5F7);
+  --tint-performing-arts: linear-gradient(135deg, #FDF0DE, #F5F5F7);
 
   /* Layout */
   --content-width: 1180px;
