@@ -323,16 +323,8 @@
   padding: 48px 0;
 }
 
-.course-detail-layout {
-  display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 40px;
-  align-items: start;
-  padding: 40px 0 80px;
-}
-
-@media (max-width: 900px) {
-  .course-detail-layout { grid-template-columns: 1fr; }
+.course-detail-stack {
+  padding: 32px 0 80px;
 }
 
 .course-detail-hero h1 {
@@ -340,30 +332,64 @@
   margin-bottom: 12px;
 }
 
-.enroll-card {
-  padding: 24px;
-  position: sticky;
-  top: 88px;
+/* Compact enroll strip — sits above the curriculum instead of beside it */
+.enroll-strip {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 20px;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
 }
 
-.enroll-card__thumb {
+.enroll-strip__thumb {
+  width: 160px;
   aspect-ratio: 16 / 9;
   border-radius: 14px;
   overflow: hidden;
-  margin-bottom: 20px;
   background: var(--grey);
+  flex-shrink: 0;
 }
 
-.enroll-card__thumb img {
+.enroll-strip__thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.enroll-card__price {
-  font-size: 28px;
+.enroll-strip__info {
+  flex: 1;
+  min-width: 160px;
+}
+
+.enroll-strip__price {
+  font-size: 24px;
   font-weight: 800;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
+}
+
+.enroll-strip__badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.enroll-strip__action {
+  flex-shrink: 0;
+  width: 220px;
+}
+
+@media (max-width: 640px) {
+  .enroll-strip {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .enroll-strip__thumb { width: 100%; }
+  .enroll-strip__action { width: 100%; }
+}
+
+.curriculum-block h2 {
+  padding-left: 4px;
 }
 
 .curriculum-module {
@@ -388,6 +414,11 @@
 
 .curriculum-lesson:last-child {
   border-bottom: none;
+}
+
+.curriculum-lesson--locked {
+  cursor: default;
+  background: var(--grey);
 }
 
 .curriculum-lesson__icon {

@@ -85,6 +85,7 @@ export default function CourseDetail() {
   };
 
   const firstLesson = modules[0]?.lessons?.[0];
+  const isFree = !course?.price || Number(course.price) === 0;
 
   if (loading) return <div className="page-spinner">Loading…</div>;
 
@@ -124,8 +125,62 @@ export default function CourseDetail() {
         </div>
       </div>
 
-      <div className="wrap course-detail-layout">
-        <div>
+      <div className="wrap course-detail-stack">
+        <div className="enroll-strip card">
+          <div className="enroll-strip__thumb">
+            {course.thumbnail_url && <img src={course.thumbnail_url} alt="" />}
+          </div>
+
+          <div className="enroll-strip__info">
+            <div className="enroll-strip__price">{isFree ? 'Free' : `R${Number(course.price).toFixed(2)}`}</div>
+            <div className="enroll-strip__badges">
+              <span className="badge badge--draft">{course.age_group}</span>
+              <span className="badge badge--draft">{course.level}</span>
+            </div>
+          </div>
+
+          <div className="enroll-strip__action">
+            {user && profiles.length > 1 && !isEnrolled && (
+              <div className="learner-picker">
+                <label style={{ fontSize: 13, fontWeight: 600, display: 'block', marginBottom: 6 }}>Enrolling as</label>
+                <select value={activeProfileId ?? ''} onChange={(e) => setActiveProfileId(e.target.value)}>
+                  {profiles.map((p) => (
+                    <option key={p.id} value={p.id}>{p.display_name}</option>
+                  ))}
+                </select>
+              </div>
+            )}
+
+            {isEnrolled ? (
+              <Link
+                to={firstLesson ? `/learn/courses/${slug}/lesson/${firstLesson.id}` : '#'}
+                className="btn btn--primary"
+                style={{ width: '100%' }}
+              >
+                Continue learning{activeProfile ? ` as ${activeProfile.display_name}` : ''}
+              </Link>
+            ) : user && !profilesLoading && profiles.length === 0 ? (
+              <div>
+                <p className="text-soft" style={{ marginBottom: 12, fontSize: 14 }}>
+                  Add a learner profile before enrolling.
+                </p>
+                <Link to="/learn/learners" className="btn btn--primary" style={{ width: '100%' }}>Add a learner</Link>
+              </div>
+            ) : (
+              <button
+                type="button"
+                className="btn btn--primary"
+                style={{ width: '100%' }}
+                onClick={handleEnroll}
+                disabled={enrolling || enrollmentLoading || (user && !activeProfileId)}
+              >
+                {enrolling ? 'Enrolling…' : 'Enroll now'}
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="curriculum-block">
           <h2 style={{ fontSize: 20, marginBottom: 16 }}>Curriculum</h2>
           {modules.length === 0 ? (
             <p className="text-soft">Curriculum coming soon.</p>
@@ -147,65 +202,15 @@ export default function CourseDetail() {
                       )}
                     </Link>
                   ) : (
-                    <div key={lesson.id} className="curriculum-lesson">
+                    <div key={lesson.id} className="curriculum-lesson curriculum-lesson--locked">
                       <span className="curriculum-lesson__icon">🔒</span>
                       <span>{lesson.title}</span>
+                      <span className="text-soft" style={{ marginLeft: 'auto', fontSize: 13 }}>Enroll to unlock</span>
                     </div>
                   )
                 )}
               </div>
             ))
-          )}
-        </div>
-
-        <div className="enroll-card card">
-          <div className="enroll-card__thumb">
-            {course.thumbnail_url && <img src={course.thumbnail_url} alt="" />}
-          </div>
-          <div className="enroll-card__price">
-            {!course.price || Number(course.price) === 0 ? 'Free' : `R${Number(course.price).toFixed(2)}`}
-          </div>
-          <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
-            <span className="badge badge--draft">{course.age_group}</span>
-            <span className="badge badge--draft">{course.level}</span>
-          </div>
-
-          {user && profiles.length > 1 && !isEnrolled && (
-            <div className="learner-picker">
-              <label style={{ fontSize: 13, fontWeight: 600, display: 'block', marginBottom: 6 }}>Enrolling as</label>
-              <select value={activeProfileId ?? ''} onChange={(e) => setActiveProfileId(e.target.value)}>
-                {profiles.map((p) => (
-                  <option key={p.id} value={p.id}>{p.display_name}</option>
-                ))}
-              </select>
-            </div>
-          )}
-
-          {isEnrolled ? (
-            <Link
-              to={firstLesson ? `/learn/courses/${slug}/lesson/${firstLesson.id}` : '#'}
-              className="btn btn--primary"
-              style={{ width: '100%' }}
-            >
-              Continue learning{activeProfile ? ` as ${activeProfile.display_name}` : ''}
-            </Link>
-          ) : user && !profilesLoading && profiles.length === 0 ? (
-            <div>
-              <p className="text-soft" style={{ marginBottom: 12, fontSize: 14 }}>
-                Add a learner profile before enrolling.
-              </p>
-              <Link to="/learn/learners" className="btn btn--primary" style={{ width: '100%' }}>Add a learner</Link>
-            </div>
-          ) : (
-            <button
-              type="button"
-              className="btn btn--primary"
-              style={{ width: '100%' }}
-              onClick={handleEnroll}
-              disabled={enrolling || enrollmentLoading || (user && !activeProfileId)}
-            >
-              {enrolling ? 'Enrolling…' : 'Enroll now'}
-            </button>
           )}
         </div>
       </div>
