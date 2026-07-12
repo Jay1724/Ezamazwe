@@ -40,7 +40,7 @@ export function AuthProvider({ children }) {
     setLoading(true);
 
     supabase
-      .from('profiles')
+      .from('users')
       .select('*')
       .eq('id', session.user.id)
       .single()
@@ -64,11 +64,11 @@ export function AuthProvider({ children }) {
     };
   }, [session?.user?.id]);
 
-  const signUp = async ({ email, password, fullName }) => {
+  const signUp = async ({ email, password, fullName, role }) => {
     return supabase.auth.signUp({
       email,
       password,
-      options: { data: { full_name: fullName } },
+      options: { data: { full_name: fullName, role } },
     });
   };
 
@@ -84,7 +84,10 @@ export function AuthProvider({ children }) {
     session,
     user: session?.user ?? null,
     profile,
-    isOwner: profile?.role === 'owner',
+    role: profile?.role ?? null,
+    isAdmin: profile?.role === 'admin',
+    isParent: profile?.role === 'parent',
+    isLearner: profile?.role === 'learner',
     loading,
     signUp,
     signIn,

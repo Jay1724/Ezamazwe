@@ -1,32 +1,28 @@
 import { useRef, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 
-export default function LessonEditor({ courseId, moduleId, lesson, position, onSaved, onCancel, onDeleted }) {
-  const idRef = useRef(lesson?.id ?? crypto.randomUUID());
+const VIDEO_PROVIDERS = [
+  { value: '', label: 'No video yet' },
+  { value: 'direct', label: 'Direct video file (mp4 URL)' },
+  { value: 'youtube', label: 'YouTube' },
+  { value: 'vimeo', label: 'Vimeo' },
+];
+
+export default function LessonEditor({ moduleId, lesson, orderIndex, onSaved, onCancel, onDeleted }) {
+  const idRef = useRef(lesson?.id);
   const [title, setTitle] = useState(lesson?.title ?? '');
-  const [content, setContent] = useState(lesson?.content ?? '');
+  const [videoProviderId, setVideoProviderId] = useState(lesson?.video_provider_id ?? '');
+  const [videoUrl, setVideoUrl] = useState(lesson?.video_url ?? '');
   const [durationSeconds, setDurationSeconds] = useState(lesson?.duration_seconds ?? '');
-  const [videoPath, setVideoPath] = useState(lesson?.video_path ?? '');
-  const [uploading, setUploading] = useState(false);
+  const [isPreview, setIsPreview] = useState(lesson?.is_preview ?? false);
+  const [resources, setResources] = useState(lesson?.resources?.length ? lesson.resources : []);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
-  const handleFileChange = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading(true);
-    setError('');
-    const path = `${courseId}/${idRef.current}/${file.name}`;
-    const { error: uploadError } = await supabase.storage
-      .from('course-videos')
-      .upload(path, file, { upsert: true });
-    setUploading(false);
-    if (uploadError) {
-      setError(uploadError.message);
-      return;
-    }
-    setVideoPath(path);
-  };
+  const addResource = () => setResources((prev) => [...prev, { label: '', url: '' }]);
+  const updateResource = (index, field, value) =>
+    setResources((prev) => prev.map((r, i) => (i === index ? { ...r, [field]: value } : r)));
+  const removeResource = (index) => setResources((prev) => prev.filter((_, i) => i !== index));
 
   const handleSave = async () => {
     if (!title.trim()) {
@@ -35,15 +31,20 @@ export default function LessonEditor({ courseId, moduleId, lesson, position, onS
     }
     setSaving(true);
     setError('');
-    const { error: saveError } = await supabase.from('lessons').upsert({
-      id: idRef.current,
+    const cleanResources = resources.filter((r) => r.label.trim() && r.url.trim());
+    const payload = {
       module_id: moduleId,
       title: title.trim(),
-      content: content.trim() || null,
+      video_provider_id: videoProviderId || null,
+      video_url: videoUrl.trim() || null,
       duration_seconds: durationSeconds ? Number(durationSeconds) : null,
-      video_path: videoPath || null,
-      position: lesson?.position ?? position,
-    });
+      is_preview: isPreview,
+      resources: cleanResources,
+      order_index: lesson?.order_index ?? orderIndex,
+    };
+    if (idRef.current) payload.id = idRef.current;
+
+    const { error: saveError } = await supabase.from('lessons').upsert(payload);
     setSaving(false);
     if (saveError) {
       setError(saveError.message);
@@ -74,9 +75,23 @@ export default function LessonEditor({ courseId, moduleId, lesson, position, onS
         <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Lesson title" />
       </div>
       <div className="field">
-        <label>Content (optional text/markdown)</label>
-        <textarea value={content} onChange={(e) => setContent(e.target.value)} placeholder="Optional lesson notes or transcript" />
+        <label>Video provider</label>
+        <select value={videoProviderId} onChange={(e) => setVideoProviderId(e.target.value)}>
+          {VIDEO_PROVIDERS.map((p) => (
+            <option key={p.value} value={p.value}>{p.label}</option>
+          ))}
+        </select>
       </div>
+      {videoProviderId && (
+        <div className="field">
+          <label>Video URL</label>
+          <input
+            value={videoUrl}
+            onChange={(e) => setVideoUrl(e.target.value)}
+            placeholder={videoProviderId === 'direct' ? 'https://…/lesson.mp4' : 'https://…'}
+          />
+        </div>
+      )}
       <div className="field">
         <label>Duration (seconds)</label>
         <input
@@ -87,14 +102,33 @@ export default function LessonEditor({ courseId, moduleId, lesson, position, onS
           placeholder="e.g. 420"
         />
       </div>
+      <div className="toggle-row">
+        <input type="checkbox" id={`preview-${idRef.current ?? 'new'}`} checked={isPreview} onChange={(e) => setIsPreview(e.target.checked)} />
+        <label htmlFor={`preview-${idRef.current ?? 'new'}`} style={{ margin: 0 }}>Free preview (visible without enrolling)</label>
+      </div>
       <div className="field">
-        <label>Video</label>
-        <input type="file" accept="video/*" onChange={handleFileChange} disabled={uploading} />
-        {uploading && <span className="file-upload-status">Uploading…</span>}
-        {videoPath && !uploading && <span className="file-upload-status">Video attached: {videoPath.split('/').pop()}</span>}
+        <label>Resources</label>
+        {resources.map((r, i) => (
+          <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 8 }}>
+            <input
+              value={r.label}
+              onChange={(e) => updateResource(i, 'label', e.target.value)}
+              placeholder="Label"
+              style={{ flex: 1 }}
+            />
+            <input
+              value={r.url}
+              onChange={(e) => updateResource(i, 'url', e.target.value)}
+              placeholder="https://…"
+              style={{ flex: 2 }}
+            />
+            <button type="button" className="icon-btn icon-btn--danger" onClick={() => removeResource(i)}>✕</button>
+          </div>
+        ))}
+        <button type="button" className="icon-btn" onClick={addResource}>+ Add resource</button>
       </div>
       <div style={{ display: 'flex', gap: 10 }}>
-        <button type="button" className="btn btn--primary btn--sm" onClick={handleSave} disabled={saving || uploading}>
+        <button type="button" className="btn btn--primary btn--sm" onClick={handleSave} disabled={saving}>
           {saving ? 'Saving…' : 'Save lesson'}
         </button>
         <button type="button" className="btn btn--secondary btn--sm" onClick={onCancel}>Cancel</button>

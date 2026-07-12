@@ -3,6 +3,9 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import ModuleEditor from './ModuleEditor.jsx';
 
+const AGE_GROUPS = ['kids', 'teens', 'adult', 'all'];
+const LEVELS = ['beginner', 'intermediate', 'advanced'];
+
 function slugify(text) {
   return text
     .toLowerCase()
@@ -24,9 +27,13 @@ export default function CourseEditor() {
   const [slug, setSlug] = useState('');
   const [slugTouched, setSlugTouched] = useState(false);
   const [description, setDescription] = useState('');
+  const [category, setCategory] = useState('');
+  const [ageGroup, setAgeGroup] = useState('all');
+  const [level, setLevel] = useState('beginner');
   const [thumbnailUrl, setThumbnailUrl] = useState('');
-  const [price, setPrice] = useState('0');
-  const [isPublished, setIsPublished] = useState(false);
+  const [instructorName, setInstructorName] = useState('');
+  const [instructorBio, setInstructorBio] = useState('');
+  const [published, setPublished] = useState(false);
 
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -38,9 +45,9 @@ export default function CourseEditor() {
       .from('modules')
       .select('*, lessons(*)')
       .eq('course_id', courseId)
-      .order('position', { ascending: true });
+      .order('order_index', { ascending: true });
     setModules(
-      (data ?? []).map((m) => ({ ...m, lessons: [...(m.lessons ?? [])].sort((a, b) => a.position - b.position) }))
+      (data ?? []).map((m) => ({ ...m, lessons: [...(m.lessons ?? [])].sort((a, b) => a.order_index - b.order_index) }))
     );
   };
 
@@ -66,9 +73,13 @@ export default function CourseEditor() {
         setTitle(data.title);
         setSlug(data.slug);
         setDescription(data.description ?? '');
+        setCategory(data.category ?? '');
+        setAgeGroup(data.age_group ?? 'all');
+        setLevel(data.level ?? 'beginner');
         setThumbnailUrl(data.thumbnail_url ?? '');
-        setPrice(String(data.price ?? 0));
-        setIsPublished(data.is_published);
+        setInstructorName(data.instructor_name ?? '');
+        setInstructorBio(data.instructor_bio ?? '');
+        setPublished(data.published);
         await loadModules(data.id);
         if (active) setLoading(false);
       })
@@ -96,9 +107,13 @@ export default function CourseEditor() {
       title: title.trim(),
       slug: slug.trim(),
       description: description.trim() || null,
+      category: category.trim() || null,
+      age_group: ageGroup,
+      level,
       thumbnail_url: thumbnailUrl.trim() || null,
-      price: price ? Number(price) : 0,
-      is_published: isPublished,
+      instructor_name: instructorName.trim() || null,
+      instructor_bio: instructorBio.trim() || null,
+      published,
     };
 
     if (isNew) {
@@ -126,7 +141,7 @@ export default function CourseEditor() {
     await supabase.from('modules').insert({
       course_id: id,
       title: newModuleTitle.trim(),
-      position: modules.length,
+      order_index: modules.length,
     });
     setNewModuleTitle('');
     setAddingModule(false);
@@ -169,21 +184,45 @@ export default function CourseEditor() {
             <textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder="What will students learn?" />
           </div>
           <div className="field">
+            <label>Category</label>
+            <input value={category} onChange={(e) => setCategory(e.target.value)} placeholder="e.g. Coding, Robotics, Business" />
+          </div>
+          <div className="field">
+            <label>Age group</label>
+            <select value={ageGroup} onChange={(e) => setAgeGroup(e.target.value)}>
+              {AGE_GROUPS.map((g) => (
+                <option key={g} value={g}>{g[0].toUpperCase() + g.slice(1)}</option>
+              ))}
+            </select>
+          </div>
+          <div className="field">
+            <label>Level</label>
+            <select value={level} onChange={(e) => setLevel(e.target.value)}>
+              {LEVELS.map((l) => (
+                <option key={l} value={l}>{l[0].toUpperCase() + l.slice(1)}</option>
+              ))}
+            </select>
+          </div>
+          <div className="field">
             <label>Thumbnail URL</label>
             <input value={thumbnailUrl} onChange={(e) => setThumbnailUrl(e.target.value)} placeholder="https://…" />
           </div>
           <div className="field">
-            <label>Price (ZAR, 0 for free)</label>
-            <input type="number" min="0" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)} />
+            <label>Instructor name</label>
+            <input value={instructorName} onChange={(e) => setInstructorName(e.target.value)} placeholder="Who teaches this course?" />
+          </div>
+          <div className="field">
+            <label>Instructor bio</label>
+            <textarea value={instructorBio} onChange={(e) => setInstructorBio(e.target.value)} placeholder="A short instructor bio" />
           </div>
           <div className="toggle-row">
             <input
               type="checkbox"
-              id="isPublished"
-              checked={isPublished}
-              onChange={(e) => setIsPublished(e.target.checked)}
+              id="published"
+              checked={published}
+              onChange={(e) => setPublished(e.target.checked)}
             />
-            <label htmlFor="isPublished" style={{ margin: 0 }}>Published (visible in catalog)</label>
+            <label htmlFor="published" style={{ margin: 0 }}>Published (visible in catalog)</label>
           </div>
           <button type="button" className="btn btn--primary" onClick={handleSaveCourse} disabled={saving} style={{ width: '100%' }}>
             {saving ? 'Saving…' : isNew ? 'Create course' : 'Save changes'}
@@ -199,7 +238,6 @@ export default function CourseEditor() {
               {modules.map((module) => (
                 <ModuleEditor
                   key={module.id}
-                  courseId={id}
                   module={module}
                   onChange={() => loadModules(id)}
                   onDeleteModule={() => loadModules(id)}

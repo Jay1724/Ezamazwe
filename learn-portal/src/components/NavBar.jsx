@@ -2,7 +2,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth.jsx';
 
 export default function NavBar() {
-  const { user, profile, isOwner, signOut } = useAuth();
+  const { user, profile, isAdmin, isParent, signOut } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -23,7 +23,12 @@ export default function NavBar() {
               Dashboard
             </NavLink>
           )}
-          {isOwner && (
+          {isParent && (
+            <NavLink to="/learn/learners" className={({ isActive }) => (isActive ? 'is-active' : '')}>
+              My learners
+            </NavLink>
+          )}
+          {isAdmin && (
             <NavLink to="/learn/admin" className={({ isActive }) => (isActive ? 'is-active' : '')}>
               Admin
             </NavLink>

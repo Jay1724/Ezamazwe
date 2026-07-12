@@ -4,13 +4,16 @@ import { BrowserRouter } from 'react-router-dom';
 import './styles/global.css';
 import './styles/portal.css';
 import { AuthProvider } from './hooks/useAuth.jsx';
+import { LearnerProfilesProvider } from './hooks/useLearnerProfiles.jsx';
 import App from './App.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
-        <App />
+        <LearnerProfilesProvider>
+          <App />
+        </LearnerProfilesProvider>
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>

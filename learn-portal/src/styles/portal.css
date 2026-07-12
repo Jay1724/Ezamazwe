@@ -98,8 +98,44 @@
 
 .auth-card {
   width: 100%;
-  max-width: 400px;
+  max-width: 440px;
   padding: 40px;
+}
+
+.role-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.role-choice__option {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.role-choice__option.is-selected {
+  border-color: var(--blue);
+  background: #EAF1FF;
+}
+
+.role-choice__option input {
+  margin-top: 3px;
+}
+
+.role-choice__option span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 14px;
+}
+
+.role-choice__option .text-soft {
+  font-size: 13px;
 }
 
 .auth-brand {
@@ -139,6 +175,22 @@
 .catalog-hero h1 {
   font-size: clamp(28px, 4vw, 40px);
   margin-bottom: 12px;
+}
+
+.catalog-filters {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.catalog-filters select {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--hairline);
+  background: var(--white);
+  font-size: 14px;
+  font-family: inherit;
 }
 
 .course-grid {
@@ -209,15 +261,6 @@
   align-items: center;
   justify-content: space-between;
   margin-top: 4px;
-}
-
-.price-tag {
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.price-tag--free {
-  color: var(--teal);
 }
 
 .badge {
@@ -649,6 +692,56 @@
   align-items: center;
   gap: 10px;
   margin-bottom: 18px;
+}
+
+/* My learners */
+.learner-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  padding-bottom: 64px;
+}
+
+.learner-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+}
+
+.learner-card__avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--grey);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+
+.learner-card__avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.learner-card__body h3 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+/* Learner picker (course detail enroll flow) */
+.learner-picker {
+  margin-bottom: 16px;
+}
+
+.learner-picker select {
+  width: 100%;
 }
 
 .file-upload-status {

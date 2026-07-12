@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard.jsx';
 import Catalog from './pages/Catalog.jsx';
 import CourseDetail from './pages/CourseDetail.jsx';
 import LessonPlayer from './pages/LessonPlayer.jsx';
+import MyLearners from './pages/MyLearners.jsx';
 import AdminDashboard from './pages/admin/AdminDashboard.jsx';
 import CourseEditor from './pages/admin/CourseEditor.jsx';
 
@@ -26,20 +27,21 @@ export default function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/learn/courses" element={<Catalog />} />
-          <Route path="/learn/courses/:slug" element={<CourseDetail />} />
           <Route
-            path="/learn/courses/:slug/lesson/:lessonId"
+            path="/learn/learners"
             element={
               <ProtectedRoute>
-                <LessonPlayer />
+                <MyLearners />
               </ProtectedRoute>
             }
           />
+          <Route path="/learn/courses" element={<Catalog />} />
+          <Route path="/learn/courses/:slug" element={<CourseDetail />} />
+          <Route path="/learn/courses/:slug/lesson/:lessonId" element={<LessonPlayer />} />
           <Route
             path="/learn/admin"
             element={
-              <ProtectedRoute requireRole="owner">
+              <ProtectedRoute requireRole="admin">
                 <AdminDashboard />
               </ProtectedRoute>
             }
@@ -47,7 +49,7 @@ export default function App() {
           <Route
             path="/learn/admin/courses/:id"
             element={
-              <ProtectedRoute requireRole="owner">
+              <ProtectedRoute requireRole="admin">
                 <CourseEditor />
               </ProtectedRoute>
             }

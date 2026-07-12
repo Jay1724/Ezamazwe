@@ -9,7 +9,7 @@ function formatDuration(seconds) {
   return `${m}:${String(s).padStart(2, '0')}`;
 }
 
-export default function ModuleEditor({ courseId, module, onChange, onDeleteModule }) {
+export default function ModuleEditor({ module, onChange, onDeleteModule }) {
   const [title, setTitle] = useState(module.title);
   const [editingLessonId, setEditingLessonId] = useState(null);
   const [addingLesson, setAddingLesson] = useState(false);
@@ -46,7 +46,6 @@ export default function ModuleEditor({ courseId, module, onChange, onDeleteModul
           editingLessonId === lesson.id ? (
             <LessonEditor
               key={lesson.id}
-              courseId={courseId}
               moduleId={module.id}
               lesson={lesson}
               onSaved={() => {
@@ -65,7 +64,8 @@ export default function ModuleEditor({ courseId, module, onChange, onDeleteModul
               {formatDuration(lesson.duration_seconds) && (
                 <span className="lesson-row__meta">{formatDuration(lesson.duration_seconds)}</span>
               )}
-              {lesson.video_path && <span className="lesson-row__meta">🎬</span>}
+              {lesson.video_url && <span className="lesson-row__meta">🎬</span>}
+              {lesson.is_preview && <span className="lesson-row__meta">Preview</span>}
               <button type="button" className="icon-btn" onClick={() => setEditingLessonId(lesson.id)}>Edit</button>
             </div>
           )
@@ -73,10 +73,9 @@ export default function ModuleEditor({ courseId, module, onChange, onDeleteModul
 
         {addingLesson ? (
           <LessonEditor
-            courseId={courseId}
             moduleId={module.id}
             lesson={null}
-            position={module.lessons.length}
+            orderIndex={module.lessons.length}
             onSaved={() => {
               closeEditors();
               onChange();

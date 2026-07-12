@@ -1,68 +1,58 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import { useAuth } from '../hooks/useAuth.jsx';
+import { useLearnerProfiles } from '../hooks/useLearnerProfiles.jsx';
 import ProgressBar from '../components/ProgressBar.jsx';
 
 export default function Dashboard() {
-  const { user } = useAuth();
+  const { profiles, activeProfileId, activeProfile, setActiveProfileId, loading: profilesLoading } = useLearnerProfiles();
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!user) return;
+    if (!activeProfileId) {
+      setRows([]);
+      setLoading(false);
+      return;
+    }
     let active = true;
     setLoading(true);
     setError('');
 
-    (async () => {
-      try {
-        const { data: enrollments, error: enrollError } = await supabase
-          .from('enrollments')
-          .select('course_id, enrolled_at, course:courses(*)')
-          .eq('user_id', user.id)
-          .order('enrolled_at', { ascending: false });
-
+    supabase
+      .from('enrollments')
+      .select('*, course:courses(*)')
+      .eq('learner_profile_id', activeProfileId)
+      .order('enrolled_at', { ascending: false })
+      .then(({ data, error: fetchError }) => {
         if (!active) return;
-        if (enrollError) throw enrollError;
-
-        const courseIds = (enrollments ?? []).map((e) => e.course_id);
-        let progressByCourse = {};
-        if (courseIds.length > 0) {
-          const { data: progressRows, error: progressError } = await supabase
-            .from('course_progress')
-            .select('*')
-            .eq('user_id', user.id)
-            .in('course_id', courseIds);
-          if (progressError) throw progressError;
-          progressByCourse = Object.fromEntries((progressRows ?? []).map((p) => [p.course_id, p]));
-        }
-
-        if (!active) return;
-        setRows(
-          (enrollments ?? [])
-            .filter((e) => e.course)
-            .map((e) => ({
-              course: e.course,
-              progress: progressByCourse[e.course_id],
-            }))
-        );
+        if (fetchError) throw fetchError;
+        setRows((data ?? []).filter((e) => e.course));
         setLoading(false);
-      } catch {
+      })
+      .catch(() => {
         if (!active) return;
         setError("Couldn't reach the server. Check your connection and try again.");
         setLoading(false);
-      }
-    })();
+      });
 
     return () => {
       active = false;
     };
-  }, [user?.id]);
+  }, [activeProfileId]);
 
-  if (loading) return <div className="page-spinner">Loading…</div>;
-  if (error) return <div className="wrap" style={{ paddingTop: 48 }}><div className="form-error">{error}</div></div>;
+  if (profilesLoading) return <div className="page-spinner">Loading…</div>;
+
+  if (profiles.length === 0) {
+    return (
+      <div className="wrap empty-state">
+        <h2>No learner profile yet</h2>
+        <p>Add a learner profile to start enrolling in courses.</p>
+        <Link to="/learn/learners" className="btn btn--primary" style={{ marginTop: 16 }}>Add a learner</Link>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -72,29 +62,45 @@ export default function Dashboard() {
       </div>
 
       <div className="wrap">
-        {rows.length === 0 ? (
+        {profiles.length > 1 && (
+          <div className="catalog-filters">
+            {profiles.map((p) => (
+              <button
+                key={p.id}
+                type="button"
+                className={`btn btn--sm ${p.id === activeProfileId ? 'btn--primary' : 'btn--secondary'}`}
+                onClick={() => setActiveProfileId(p.id)}
+              >
+                {p.display_name}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {loading ? (
+          <div className="page-spinner">Loading…</div>
+        ) : error ? (
+          <div className="form-error">{error}</div>
+        ) : rows.length === 0 ? (
           <div className="empty-state">
             <h2>No courses yet</h2>
-            <p>Enroll in a course from the catalog to get started.</p>
+            <p>{activeProfile ? `Enroll ${activeProfile.display_name} in a course` : 'Enroll in a course'} from the catalog to get started.</p>
             <Link to="/learn/courses" className="btn btn--primary" style={{ marginTop: 16 }}>
               Browse catalog
             </Link>
           </div>
         ) : (
           <div className="dashboard-list">
-            {rows.map(({ course, progress }) => (
-              <div key={course.id} className="dashboard-card card">
+            {rows.map((enrollment) => (
+              <div key={enrollment.id} className="dashboard-card card">
                 <div className="dashboard-card__thumb">
-                  {course.thumbnail_url && <img src={course.thumbnail_url} alt="" />}
+                  {enrollment.course.thumbnail_url && <img src={enrollment.course.thumbnail_url} alt="" />}
                 </div>
                 <div className="dashboard-card__body">
-                  <h3>{course.title}</h3>
-                  <ProgressBar
-                    percent={progress?.percent_complete ?? 0}
-                    label={`${progress?.completed_lessons ?? 0} of ${progress?.total_lessons ?? 0} lessons`}
-                  />
+                  <h3>{enrollment.course.title}</h3>
+                  <ProgressBar percent={enrollment.progress_percent ?? 0} label={`${Math.round(enrollment.progress_percent ?? 0)}% complete`} />
                 </div>
-                <Link to={`/learn/courses/${course.slug}`} className="btn btn--primary btn--sm">
+                <Link to={`/learn/courses/${enrollment.course.slug}`} className="btn btn--primary btn--sm">
                   Continue
                 </Link>
               </div>

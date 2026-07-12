@@ -8,6 +8,7 @@ export default function Signup() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('learner');
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [confirmSent, setConfirmSent] = useState(false);
@@ -24,7 +25,7 @@ export default function Signup() {
       return;
     }
     setSubmitting(true);
-    const { data, error: signUpError } = await signUp({ email, password, fullName });
+    const { data, error: signUpError } = await signUp({ email, password, fullName, role });
     setSubmitting(false);
     if (signUpError) {
       setError(signUpError.message);
@@ -34,7 +35,7 @@ export default function Signup() {
       setConfirmSent(true);
       return;
     }
-    navigate('/learn', { replace: true });
+    navigate(role === 'parent' ? '/learn/learners' : '/learn', { replace: true });
   };
 
   if (confirmSent) {
@@ -59,6 +60,25 @@ export default function Signup() {
         {error && <div className="form-error">{error}</div>}
 
         <form onSubmit={handleSubmit}>
+          <div className="field">
+            <label>I'm signing up…</label>
+            <div className="role-choice">
+              <label className={`role-choice__option ${role === 'learner' ? 'is-selected' : ''}`}>
+                <input type="radio" name="role" value="learner" checked={role === 'learner'} onChange={() => setRole('learner')} />
+                <span>
+                  <strong>For myself</strong>
+                  <span className="text-soft">I'll take courses under my own account.</span>
+                </span>
+              </label>
+              <label className={`role-choice__option ${role === 'parent' ? 'is-selected' : ''}`}>
+                <input type="radio" name="role" value="parent" checked={role === 'parent'} onChange={() => setRole('parent')} />
+                <span>
+                  <strong>For my child/children</strong>
+                  <span className="text-soft">I'll manage one or more learner profiles.</span>
+                </span>
+              </label>
+            </div>
+          </div>
           <div className="field">
             <label htmlFor="fullName">Full name</label>
             <input

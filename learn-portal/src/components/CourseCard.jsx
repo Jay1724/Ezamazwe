@@ -1,8 +1,6 @@
 import { Link } from 'react-router-dom';
 
 export default function CourseCard({ course }) {
-  const isFree = !course.price || Number(course.price) === 0;
-
   return (
     <Link to={`/learn/courses/${course.slug}`} className="course-card card">
       <div className="course-card__thumb">
@@ -12,9 +10,8 @@ export default function CourseCard({ course }) {
         <h3>{course.title}</h3>
         {course.description && <p className="course-card__desc">{course.description}</p>}
         <div className="course-card__meta">
-          <span className={`price-tag ${isFree ? 'price-tag--free' : ''}`}>
-            {isFree ? 'Free' : `R${Number(course.price).toFixed(2)}`}
-          </span>
+          {course.category && <span className="badge badge--draft">{course.category}</span>}
+          <span className="text-soft" style={{ fontSize: 13 }}>{course.level}</span>
         </div>
       </div>
     </Link>

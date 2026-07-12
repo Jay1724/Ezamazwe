@@ -1,15 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { useAuth } from './useAuth.jsx';
 
-export function useEnrollment(courseId) {
-  const { user } = useAuth();
+export function useEnrollment(learnerProfileId, courseId) {
   const [enrollment, setEnrollment] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   const refresh = useCallback(async () => {
-    if (!user || !courseId) {
+    if (!learnerProfileId || !courseId) {
       setEnrollment(null);
       setLoading(false);
       return;
@@ -20,7 +18,7 @@ export function useEnrollment(courseId) {
       const { data, error: fetchError } = await supabase
         .from('enrollments')
         .select('*')
-        .eq('user_id', user.id)
+        .eq('learner_profile_id', learnerProfileId)
         .eq('course_id', courseId)
         .maybeSingle();
       if (fetchError) throw fetchError;
@@ -30,18 +28,18 @@ export function useEnrollment(courseId) {
     } finally {
       setLoading(false);
     }
-  }, [user, courseId]);
+  }, [learnerProfileId, courseId]);
 
   useEffect(() => {
     refresh();
   }, [refresh]);
 
   const enroll = useCallback(async () => {
-    if (!user || !courseId) return;
+    if (!learnerProfileId || !courseId) return;
     setError('');
     const { data, error: insertError } = await supabase
       .from('enrollments')
-      .insert({ user_id: user.id, course_id: courseId })
+      .insert({ learner_profile_id: learnerProfileId, course_id: courseId })
       .select()
       .single();
     if (insertError) {
@@ -50,7 +48,7 @@ export function useEnrollment(courseId) {
     }
     setEnrollment(data);
     return data;
-  }, [user, courseId]);
+  }, [learnerProfileId, courseId]);
 
   return { enrollment, isEnrolled: !!enrollment, loading, error, enroll };
 }

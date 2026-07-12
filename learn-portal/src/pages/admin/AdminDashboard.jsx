@@ -41,7 +41,8 @@ export default function AdminDashboard() {
             <tr>
               <th>Title</th>
               <th>Status</th>
-              <th>Price</th>
+              <th>Age group</th>
+              <th>Level</th>
               <th></th>
             </tr>
           </thead>
@@ -50,11 +51,12 @@ export default function AdminDashboard() {
               <tr key={course.id}>
                 <td>{course.title}</td>
                 <td>
-                  <span className={`badge ${course.is_published ? 'badge--published' : 'badge--draft'}`}>
-                    {course.is_published ? 'Published' : 'Draft'}
+                  <span className={`badge ${course.published ? 'badge--published' : 'badge--draft'}`}>
+                    {course.published ? 'Published' : 'Draft'}
                   </span>
                 </td>
-                <td>{!course.price || Number(course.price) === 0 ? 'Free' : `R${Number(course.price).toFixed(2)}`}</td>
+                <td>{course.age_group}</td>
+                <td>{course.level}</td>
                 <td>
                   <Link to={`/learn/admin/courses/${course.id}`} className="icon-btn">Edit</Link>
                 </td>
