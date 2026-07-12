@@ -61,6 +61,7 @@ create table courses (
   thumbnail_url text,
   instructor_name text,
   instructor_bio text,
+  price numeric not null default 0,
   published boolean not null default false,
   created_at timestamptz default now()
 );

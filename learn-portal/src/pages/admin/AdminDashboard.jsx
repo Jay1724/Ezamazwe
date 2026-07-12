@@ -43,6 +43,7 @@ export default function AdminDashboard() {
               <th>Status</th>
               <th>Age group</th>
               <th>Level</th>
+              <th>Price</th>
               <th></th>
             </tr>
           </thead>
@@ -57,6 +58,7 @@ export default function AdminDashboard() {
                 </td>
                 <td>{course.age_group}</td>
                 <td>{course.level}</td>
+                <td>{!course.price || Number(course.price) === 0 ? 'Free' : `R${Number(course.price).toFixed(2)}`}</td>
                 <td>
                   <Link to={`/learn/admin/courses/${course.id}`} className="icon-btn">Edit</Link>
                 </td>

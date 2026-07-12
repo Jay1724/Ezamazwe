@@ -162,6 +162,9 @@ export default function CourseDetail() {
           <div className="enroll-card__thumb">
             {course.thumbnail_url && <img src={course.thumbnail_url} alt="" />}
           </div>
+          <div className="enroll-card__price">
+            {!course.price || Number(course.price) === 0 ? 'Free' : `R${Number(course.price).toFixed(2)}`}
+          </div>
           <div style={{ display: 'flex', gap: 8, marginBottom: 16, flexWrap: 'wrap' }}>
             <span className="badge badge--draft">{course.age_group}</span>
             <span className="badge badge--draft">{course.level}</span>

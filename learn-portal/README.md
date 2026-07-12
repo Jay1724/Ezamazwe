@@ -36,4 +36,5 @@ update users set role = 'admin' where id = (select id from auth.users where emai
   letting visitors sample a course before signing up.
 - `quizzes` and `certificates` tables exist in the schema for a future phase; there's no UI for
   either yet.
-- There's still no payment flow — courses don't carry a price, and enrolling is always immediate.
+- Courses carry a `price` (0 = free, admin-set). There's still no payment flow — enrolling is
+  immediate regardless of price. Wire up a payment provider before charging for real courses.

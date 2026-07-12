@@ -33,6 +33,7 @@ export default function CourseEditor() {
   const [thumbnailUrl, setThumbnailUrl] = useState('');
   const [instructorName, setInstructorName] = useState('');
   const [instructorBio, setInstructorBio] = useState('');
+  const [price, setPrice] = useState('0');
   const [published, setPublished] = useState(false);
 
   const [saving, setSaving] = useState(false);
@@ -79,6 +80,7 @@ export default function CourseEditor() {
         setThumbnailUrl(data.thumbnail_url ?? '');
         setInstructorName(data.instructor_name ?? '');
         setInstructorBio(data.instructor_bio ?? '');
+        setPrice(String(data.price ?? 0));
         setPublished(data.published);
         await loadModules(data.id);
         if (active) setLoading(false);
@@ -113,6 +115,7 @@ export default function CourseEditor() {
       thumbnail_url: thumbnailUrl.trim() || null,
       instructor_name: instructorName.trim() || null,
       instructor_bio: instructorBio.trim() || null,
+      price: price ? Number(price) : 0,
       published,
     };
 
@@ -214,6 +217,10 @@ export default function CourseEditor() {
           <div className="field">
             <label>Instructor bio</label>
             <textarea value={instructorBio} onChange={(e) => setInstructorBio(e.target.value)} placeholder="A short instructor bio" />
+          </div>
+          <div className="field">
+            <label>Price (ZAR, 0 for free)</label>
+            <input type="number" min="0" step="0.01" value={price} onChange={(e) => setPrice(e.target.value)} />
           </div>
           <div className="toggle-row">
             <input
