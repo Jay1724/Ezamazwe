@@ -130,3 +130,28 @@
   color: var(--ink);
   font-weight: 600;
 }
+
+.mission-recap ul {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.mission-recap li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 18px;
+  color: var(--ink-soft);
+}
+
+.mission-recap li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--blue);
+}
