@@ -131,27 +131,43 @@
   font-weight: 600;
 }
 
-.mission-recap ul {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 20px;
+/* Pillars recap grid (history section) */
+.pillars-recap-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  max-width: 760px;
+  margin: 8px 0 40px;
 }
 
-.mission-recap li {
-  position: relative;
-  padding-left: 22px;
-  font-size: 18px;
+.pillar-recap-card {
+  padding: 28px;
+  border-radius: var(--radius-card);
+}
+
+.pillar-recap-card--education { background: var(--tint-education); }
+.pillar-recap-card--incubation { background: var(--tint-incubation); }
+.pillar-recap-card--enterprise { background: var(--tint-enterprise); }
+.pillar-recap-card--performing-arts { background: var(--tint-performing-arts); }
+
+.pillar-recap-card__num {
+  display: block;
+  font-size: 13px;
   color: var(--ink-soft);
+  margin-bottom: 12px;
 }
 
-.mission-recap li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 10px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--blue);
+.pillar-recap-card h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.pillar-recap-card p {
+  font-size: 15px;
+  color: var(--ink-soft);
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .pillars-recap-grid { grid-template-columns: 1fr; }
 }
