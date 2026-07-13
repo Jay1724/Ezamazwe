@@ -108,7 +108,7 @@
 
 /* Mission recap */
 .mission-recap {
-  max-width: 760px;
+  max-width: 820px;
 }
 
 .mission-recap h2 {
@@ -134,15 +134,24 @@
 /* Pillars recap grid (history section) */
 .pillars-recap-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
-  max-width: 760px;
   margin: 8px 0 40px;
 }
 
+@media (max-width: 1080px) {
+  .pillars-recap-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .pillars-recap-grid { grid-template-columns: 1fr; }
+}
+
 .pillar-recap-card {
-  padding: 28px;
+  padding: 24px;
   border-radius: var(--radius-card);
+  display: flex;
+  flex-direction: column;
 }
 
 .pillar-recap-card--education { background: var(--tint-education); }
@@ -166,8 +175,4 @@
   font-size: 15px;
   color: var(--ink-soft);
   margin: 0;
-}
-
-@media (max-width: 640px) {
-  .pillars-recap-grid { grid-template-columns: 1fr; }
 }
