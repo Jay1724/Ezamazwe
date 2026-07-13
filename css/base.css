@@ -156,8 +156,8 @@ textarea:focus-visible {
 }
 
 .brand__mark {
-  width: 28px;
-  height: 28px;
+  width: auto;
+  height: 38px;
 }
 
 .nav-links {
@@ -376,16 +376,15 @@ textarea:focus-visible {
 }
 
 .footer-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
   color: var(--white);
-  font-weight: 700;
-  font-size: 18px;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
-.footer-brand__mark { width: 28px; height: 28px; }
+.footer-brand__logo {
+  width: 220px;
+  height: auto;
+  display: block;
+}
 
 .footer-col h4 {
   font-family: 'JetBrains Mono', monospace;
