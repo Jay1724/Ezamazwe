@@ -22,60 +22,78 @@
   color: var(--ink-soft);
 }
 
-/* Founder */
-.founder {
-  display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
-  gap: 56px;
-  align-items: start;
+/* Board */
+.board-heading {
+  max-width: 700px;
+  margin-bottom: 48px;
 }
 
-.founder__portrait {
-  aspect-ratio: 4 / 5;
-  border-radius: var(--radius-card);
-  background: var(--tint-education);
+.board-heading h2 {
+  font-size: clamp(26px, 3vw, 36px);
+  margin: 12px 0 16px;
+}
+
+.board-heading p {
+  font-size: 18px;
+  color: var(--ink-soft);
+}
+
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.board-card {
+  background: var(--white);
+  padding: 32px;
+}
+
+.board-card__avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--hairline);
-}
-
-.founder__portrait span {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  color: var(--ink-soft);
-  text-align: center;
-  padding: 0 24px;
-}
-
-.founder__name {
-  font-size: 26px;
-  margin-bottom: 6px;
-}
-
-.founder__title {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--blue);
-  margin-bottom: 28px;
-  display: block;
-}
-
-.founder__bio p {
-  color: var(--ink-soft);
-  font-size: 16.5px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--white);
   margin-bottom: 20px;
 }
 
-.founder__bio p:last-child {
-  margin-bottom: 0;
+.board-card__avatar--education { background: var(--blue); }
+.board-card__avatar--incubation { background: var(--indigo); }
+.board-card__avatar--enterprise { background: var(--teal); }
+.board-card__avatar--performing-arts { background: var(--amber); }
+
+.board-card h3 {
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.board-card__title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 14px;
+  display: block;
+}
+
+.board-card p {
+  font-size: 15px;
+  color: var(--ink-soft);
 }
 
 @media (max-width: 920px) {
-  .founder { grid-template-columns: 1fr; gap: 32px; }
-  .founder__portrait { max-width: 320px; margin: 0 auto; }
+  .board-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .board-grid { grid-template-columns: 1fr; }
 }
 
 /* Values grid */
