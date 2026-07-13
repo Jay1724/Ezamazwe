@@ -112,6 +112,43 @@
     counters.forEach(function (el) { observer.observe(el); });
   }
 
+  function initVideoModal() {
+    var cards = document.querySelectorAll('.video-card[data-video-id]');
+    var modal = document.getElementById('videoModal');
+    if (!cards.length || !modal) return;
+
+    var frame = document.getElementById('videoModalFrame');
+    var closers = modal.querySelectorAll('[data-video-close]');
+
+    function openModal(id) {
+      frame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+      modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('video-modal-open');
+    }
+
+    function closeModal() {
+      modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('video-modal-open');
+      frame.src = '';
+    }
+
+    cards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        openModal(card.getAttribute('data-video-id'));
+      });
+    });
+
+    closers.forEach(function (el) {
+      el.addEventListener('click', closeModal);
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+    });
+  }
+
   function initContactForm() {
     var form = document.querySelector('.contact-form');
     if (!form) return;
@@ -138,6 +175,7 @@
     initStaggerGroups();
     initReveal();
     initCountUp();
+    initVideoModal();
     initContactForm();
   });
 })();
