@@ -185,6 +185,43 @@
     });
   }
 
+  function initBookingForm() {
+    var form = document.querySelector('.booking-form');
+    if (!form) return;
+
+    // No backend — submitting opens the visitor's email app with the
+    // details pre-filled, addressed to info@ezamazwe.africa.
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data = new FormData(form);
+      var name = data.get('name') || '';
+      var email = data.get('email') || '';
+      var area = data.get('area') || '';
+      var entity = data.get('entity') || '';
+      var message = data.get('message') || '';
+
+      var subject = 'Performing Arts booking enquiry — ' + name;
+      var body = 'Name: ' + name + '\n' +
+        'Email: ' + email + '\n' +
+        'Area: ' + area + '\n' +
+        'Entity type: ' + entity + '\n\n' +
+        'Message:\n' + message;
+
+      window.location.href = 'mailto:info@ezamazwe.africa' +
+        '?subject=' + encodeURIComponent(subject) +
+        '&body=' + encodeURIComponent(body);
+
+      var wrap = form.closest('.booking-form-wrap');
+      var success = wrap ? wrap.querySelector('.form-success') : null;
+      if (success) {
+        success.classList.add('is-visible');
+        success.setAttribute('tabindex', '-1');
+        success.focus();
+      }
+      form.reset();
+    });
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     initNav();
     initStaggerGroups();
@@ -192,5 +229,6 @@
     initCountUp();
     initVideoModal();
     initContactForm();
+    initBookingForm();
   });
 })();

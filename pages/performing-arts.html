@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../css/base.css">
 <link rel="stylesheet" href="../css/pillar.css">
+<link rel="stylesheet" href="../css/contact.css">
 </head>
 <body>
 
@@ -135,6 +136,68 @@
         <div class="pillar-nav-strip">
           <h3 style="margin:0;">Explore the rest of the ecosystem</h3>
           <a href="education-accelerator.html" class="btn btn--secondary btn--sm">Back to Education Accelerator &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--grey">
+    <div class="wrap contact-layout">
+      <div class="reveal booking-form-wrap">
+        <span class="eyebrow">Book a performance</span>
+        <h2 style="font-size: clamp(26px, 3vw, 36px); margin: 12px 0 16px;">Bring Ezamazwe Performing Arts to your school, theatre or event.</h2>
+        <p style="color: var(--ink-soft); font-size: 16px; margin-bottom: 28px;">Tell us a bit about what you have in mind and we'll get back to you to arrange details.</p>
+
+        <div class="form-success" role="status">
+          <span>&#10003;</span>
+          <span>Thanks — your booking enquiry has been noted. We'll be in touch soon.</span>
+        </div>
+
+        <form class="booking-form" action="#" method="post">
+          <div class="form-row">
+            <div class="form-field">
+              <label for="booking-name">Full name</label>
+              <input type="text" id="booking-name" name="name" placeholder="Your name" required>
+            </div>
+            <div class="form-field">
+              <label for="booking-email">Email</label>
+              <input type="email" id="booking-email" name="email" placeholder="you@example.com" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label for="booking-area">Area / town</label>
+              <input type="text" id="booking-area" name="area" placeholder="e.g. Tzaneen, Limpopo" required>
+            </div>
+            <div class="form-field">
+              <label for="booking-entity">Entity type</label>
+              <select id="booking-entity" name="entity" required>
+                <option value="">Select one</option>
+                <option value="School">School</option>
+                <option value="Theatre">Theatre</option>
+                <option value="Community organisation">Community organisation</option>
+                <option value="Corporate / event">Corporate / event</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-field">
+            <label for="booking-message">Message</label>
+            <textarea id="booking-message" name="message" placeholder="Tell us about the event, date and audience..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn--primary">Send booking enquiry</button>
+          <p class="form-note">Submitting opens your email app with these details, addressed to info@ezamazwe.africa.</p>
+        </form>
+      </div>
+
+      <div class="reveal">
+        <div class="contact-info-card">
+          <h3>Prefer to talk?</h3>
+          <a href="tel:+27822175404">082 217 5404</a>
+        </div>
+        <div class="contact-info-card">
+          <h3>Email</h3>
+          <a href="mailto:info@ezamazwe.africa">info@ezamazwe.africa</a>
         </div>
       </div>
     </div>

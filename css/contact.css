@@ -30,7 +30,8 @@
 }
 
 /* Form */
-.contact-form {
+.contact-form,
+.booking-form {
   background: var(--white);
   border: 1px solid var(--hairline);
   border-radius: var(--radius-card);
@@ -55,7 +56,8 @@
 }
 
 .form-field input,
-.form-field textarea {
+.form-field textarea,
+.form-field select {
   width: 100%;
   padding: 13px 16px;
   border-radius: 12px;
@@ -68,7 +70,8 @@
 }
 
 .form-field input:focus,
-.form-field textarea:focus {
+.form-field textarea:focus,
+.form-field select:focus {
   border-color: var(--blue);
   background: var(--white);
   outline: none;
@@ -158,5 +161,6 @@
 @media (max-width: 920px) {
   .contact-layout { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
-  .contact-form { padding: 28px; }
+  .contact-form,
+  .booking-form { padding: 28px; }
 }
