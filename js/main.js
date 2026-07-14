@@ -113,15 +113,25 @@
   }
 
   function initVideoModal() {
-    var cards = document.querySelectorAll('.video-card[data-video-id]');
+    var cards = document.querySelectorAll('.video-card[data-video-id], .video-card[data-video-src]');
     var modal = document.getElementById('videoModal');
     if (!cards.length || !modal) return;
 
     var frame = document.getElementById('videoModalFrame');
+    var video = document.getElementById('videoModalVideo');
     var closers = modal.querySelectorAll('[data-video-close]');
 
-    function openModal(id) {
-      frame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+    function openModal(id, src) {
+      if (id) {
+        frame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+        frame.style.display = '';
+        if (video) video.style.display = 'none';
+      } else if (src && video) {
+        video.src = src;
+        video.style.display = '';
+        frame.style.display = 'none';
+        video.play();
+      }
       modal.classList.add('is-open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('video-modal-open');
@@ -132,11 +142,16 @@
       modal.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('video-modal-open');
       frame.src = '';
+      if (video) {
+        video.pause();
+        video.removeAttribute('src');
+        video.load();
+      }
     }
 
     cards.forEach(function (card) {
       card.addEventListener('click', function () {
-        openModal(card.getAttribute('data-video-id'));
+        openModal(card.getAttribute('data-video-id'), card.getAttribute('data-video-src'));
       });
     });
 

@@ -169,6 +169,25 @@
   color: var(--ink-soft);
 }
 
+/* In action video */
+.pillar-video {
+  margin-top: 64px;
+}
+
+.pillar-video__heading {
+  max-width: 640px;
+  margin-bottom: 32px;
+}
+
+.pillar-video__heading h2 {
+  font-size: clamp(24px, 2.8vw, 32px);
+}
+
+.pillar-video__frame {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
 /* Pillar cross-links */
 .pillar-nav-strip {
   display: flex;
