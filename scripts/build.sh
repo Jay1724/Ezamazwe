@@ -15,6 +15,8 @@ mkdir -p "$OUT_DIR"
 
 # Static marketing site
 cp "$ROOT_DIR/index.html" "$OUT_DIR/"
+cp "$ROOT_DIR/robots.txt" "$OUT_DIR/"
+cp "$ROOT_DIR/sitemap.xml" "$OUT_DIR/"
 cp -r "$ROOT_DIR/css" "$OUT_DIR/css"
 cp -r "$ROOT_DIR/js" "$OUT_DIR/js"
 cp -r "$ROOT_DIR/assets" "$OUT_DIR/assets"
